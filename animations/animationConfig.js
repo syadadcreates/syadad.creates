@@ -62,10 +62,30 @@ window.ANIMATION_CONFIG = {
   shakeStrength: 70,               // seberapa kuat elemen bergoyang saat perangkat diguncang
   shakeMaxImpulse: 900,            // batas dorongan per guncangan
 
-  // ---- Elemen yang ikut menghindar kursor ----
-  repelSelector: ".topbar span, .hero__year, .about__intro p, .about__name, .about__photo, .socials img, .about__text, .h-sm, .hard img, .ring, .soft li, .skills p, .duo-title--xl, .work__title, .work__desc, .grid-posters figure, .grid-illus figure, .carousel, .banner, .scan__title, .thanks p",
-                                   // daftar elemen (CSS selector) yang ikut menghindar; tombol & link TIDAK boleh dimasukkan
-  repelMinMass: 0.12,              // elemen besar (foto, carousel) bergerak lebih sedikit; 0.12 = paling berat
+  // ---- Menghindar kursor: HANYA konten 1 (hero) ----
+  // Bintang chrome & huruf "Portfolio" sudah otomatis (data-interactive). Di sini: teks yang dipecah per-HURUF lalu menghindar.
+  repelBigTextSelector: ".hero__year",   // "2026" -> tiap angka menghindar sendiri-sendiri
+  repelSelector: "",                     // elemen utuh tambahan yang menghindar (kosong = tidak ada)
+  repelMinMass: 0.12,              // elemen besar bergerak lebih sedikit; 0.12 = paling berat
+
+  // ---- Efek "pop up" saat kursor mendekat/melewati ----
+  // Yang dilewati kursor membesar penuh (scale); yang di dekatnya ikut membesar lebih kecil (neighbor), makin jauh makin kecil.
+  // Tiap grup: selector = elemen target | split = "letters" (per huruf) / "words" (per kata) / kosong (elemen utuh)
+  //            scale = tambahan ukuran penuh (0.3 = +30%) | neighbor = tambahan ukuran tetangga terdekat
+  //            radius = jarak (px) pengaruh | power = ketajaman jatuhnya efek (besar = tetangga cepat mengecil)
+  //            sizeAdjust = true: elemen lebar otomatis pop lebih kecil | origin = titik tumpu skala
+  popGroups: [
+    { selector: ".work figure",                     scale: 0.16, neighbor: 0.085, radius: 260, power: 1.4, sizeAdjust: true },        // foto desain grafis & ilustrasi
+    { selector: ".about__text, .work__desc",        split: "letters", scale: 0.85, neighbor: 0.42, radius: 48, power: 2.2 },         // isi about me + penjelasan 3 karya: per huruf
+    { selector: ".thanks p",                        split: "words",   scale: 0.3,  neighbor: 0.15, radius: 90, power: 1.6 },         // teks di bawah "thank you": per kata
+    { selector: ".topbar",                          scale: 0.08, neighbor: 0.03, radius: 30, power: 1 },                             // bar kaca: pop selama kursor ada di areanya
+    { selector: ".topbar > *",                      scale: 0.28, neighbor: 0.12, radius: 70, power: 1.6 },                          // syadad / 18 y.o / smkn 1 cibadak
+    { selector: ".about__intro p, .about__name, .h-sm, .skills p, .work__title, .duo-title--xl, .scan__title", scale: 0.14, neighbor: 0.06, radius: 120, power: 1.6, origin: "left center" }, // judul & education: utuh
+    { selector: ".soft li",                         scale: 0.2,  neighbor: 0.09, radius: 90, power: 1.6, origin: "left center" },    // tiap soft skill
+    { selector: ".socials img, .hard img, .ring",   scale: 0.32, neighbor: 0.14, radius: 110, power: 1.6 },                         // logo sosmed, logo aplikasi, lingkaran persen + angkanya
+  ],
+  popStiffness: 260,               // kekencangan pegas pop; besar = cepat
+  popDamping: 20,                  // peredam; kecil = memantul lebih lama
 
   // ---- Mobile: konten kedua naik dari bawah setelah welcome ----
   mobileSlideUpDuration: 1.1,      // durasi kartu profil naik dari bawah (khusus mobile)

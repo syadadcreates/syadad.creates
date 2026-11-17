@@ -67,3 +67,7 @@ main { position: relative; overflow-x: clip; }
 [data-interactive].is-dragging { cursor: grabbing; }
 /* tombol & link selalu di atas elemen lain yang bergeser, supaya tetap bisa diklik */
 .btn, a[data-link] { position: relative; z-index: 3; }
+
+/* ---- Potongan teks yang menghindar kursor (dibuat otomatis oleh interactions.js) ---- */
+.rw, .rc { display: inline-block; }
+.rw--word { white-space: nowrap; }
