@@ -12,7 +12,15 @@
 <script>document.documentElement.classList.add("js")</script>
 </head>
 <body>
-<div class="intro" aria-hidden="true"><span class="intro__name">welcome</span></div>
+<div class="intro" aria-hidden="true">
+  <i class="intro__glow intro__glow--a"></i><i class="intro__glow intro__glow--b"></i>
+  <div class="intro__center">
+    <img class="intro__star intro__star--a" src="assets/icons/star-spiky.png" alt="" width="84" height="84"><img class="intro__star intro__star--b" src="assets/icons/star-round.png" alt="" width="70" height="70">
+    <span class="intro__name">welcome</span>
+    <span class="intro__sub"></span>
+  </div>
+  <div class="intro__load"><span class="intro__count">0%</span><span class="intro__bar"><i></i></span></div>
+</div>
 <main id="app"></main>
 <!-- Library animasi (GSAP + ScrollTrigger) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

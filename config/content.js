@@ -4,7 +4,7 @@
 // Path gambar relatif terhadap index.html (folder assets/).
 // ============================================================
 window.SITE_CONTENT = {
-  intro: { text: "welcome" }, // tulisan di layar pembuka sebelum masuk ke portfolio
+  intro: { text: "welcome", sub: "portfolio · 2026" }, // tulisan di layar pembuka (text = judul besar, sub = tulisan kecil di bawahnya)
 
   topbar: { name: "syadad", age: "18 y.o", school: "smkn 1 cibadak" },
 

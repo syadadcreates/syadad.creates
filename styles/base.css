@@ -45,8 +45,28 @@ a { color: inherit; text-decoration: none; }
 a[data-placeholder="true"] { cursor: not-allowed; }
 
 /* ---- Layar pembuka ---- */
-.intro { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; background: #eef2e4; }
-.intro__name { font: 800 italic clamp(40px, 9vw, 96px) var(--font-display); letter-spacing: -.04em; color: var(--green-olive); opacity: 0; }
+.intro { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; overflow: hidden; --intro-dur: 2.3s;
+  background: radial-gradient(120% 90% at 50% 40%, #f7faef 0%, #e6eed5 58%, #d3dfb9 100%); }
+.intro__glow { position: absolute; width: 60vmax; aspect-ratio: 1; border-radius: 50%; filter: blur(70px); pointer-events: none; background: rgba(150,185,60,.3); animation: introDrift 5s ease-in-out infinite alternate; }
+.intro__glow--a { left: -22vmax; top: -18vmax; }
+.intro__glow--b { right: -26vmax; bottom: -22vmax; background: rgba(111,143,85,.32); animation-delay: -2.5s; }
+.intro__center { position: relative; display: grid; justify-items: center; gap: clamp(8px, 1.6vw, 18px); }
+.intro__name { font: 800 italic clamp(46px, 12vw, 128px)/1 var(--font-display); letter-spacing: -.04em; color: var(--green-olive); white-space: nowrap; }
+.intro__name .ic { display: inline-block; animation: introLetter .95s cubic-bezier(.2,.9,.2,1) both; animation-delay: calc(.15s + var(--i) * .075s); }
+.intro__sub { font: 300 clamp(12px, 2.2vw, 24px) var(--font-display); letter-spacing: .34em; text-transform: uppercase; color: var(--green-dark); opacity: .8; padding-left: .34em; animation: introRise .9s .95s cubic-bezier(.2,.9,.2,1) both; }
+.intro__star { position: absolute; width: clamp(34px, 6.4vw, 88px); height: auto; animation: introPop .8s cubic-bezier(.3,1.6,.5,1) both, introWiggle 2.8s ease-in-out infinite; }
+.intro__star--a { right: -5%; top: -42%; animation-delay: .55s, .55s; }
+.intro__star--b { left: -7%; bottom: -34%; width: clamp(28px, 5.2vw, 72px); animation-delay: .8s, .8s; animation-direction: normal, reverse; }
+.intro__load { position: absolute; left: 50%; bottom: clamp(34px, 9vh, 84px); translate: -50% 0; display: grid; justify-items: center; gap: 10px; }
+.intro__count { font: 500 clamp(12px, 1.6vw, 16px) var(--font-display); letter-spacing: .12em; color: var(--green-dark); font-variant-numeric: tabular-nums; animation: introRise .7s .4s both; }
+.intro__bar { width: min(240px, 52vw); height: 3px; border-radius: 3px; overflow: hidden; background: rgba(111,143,85,.25); animation: introRise .7s .4s both; }
+.intro__bar i { display: block; width: 100%; height: 100%; background: var(--green-olive); transform-origin: left; animation: introBar var(--intro-dur) cubic-bezier(.65,0,.35,1) both; }
+@keyframes introLetter { from { opacity: 0; transform: translateY(70%) rotate(7deg) scale(.8); filter: blur(6px); } }
+@keyframes introRise { from { opacity: 0; transform: translateY(12px); } }
+@keyframes introPop { from { opacity: 0; scale: .2; } }
+@keyframes introWiggle { 0%, 100% { rotate: -12deg; } 50% { rotate: 14deg; } }
+@keyframes introBar { from { transform: scaleX(0); } }
+@keyframes introDrift { to { transform: translate(6vmax, 4vmax) scale(1.12); } }
 
 /* ---- Keadaan awal animasi (disembunyikan sampai GSAP jalan) ---- */
 .js [data-reveal], .js [data-image], .js [data-hero], .js [data-split], .js [data-stagger] { opacity: 0; }

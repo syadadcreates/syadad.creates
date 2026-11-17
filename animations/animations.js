@@ -124,8 +124,8 @@
     const intro = document.querySelector(".intro");
     const heroItems = document.querySelectorAll("[data-hero]");
     const tl = gsap.timeline();
-    tl.fromTo(".intro__name", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: C.textRevealDuration, ease: C.textRevealEase })
-      .to(intro, { autoAlpha: 0, duration: C.introFadeDuration, delay: C.introHoldTime, onComplete: () => intro.remove() })
+    // Layar welcome tampil selama introDuration (isinya dianimasikan CSS), lalu terangkat ke atas seperti tirai.
+    tl.to(intro, { yPercent: -100, borderBottomLeftRadius: "60% 14vh", borderBottomRightRadius: "60% 14vh", duration: C.introExitDuration, ease: C.introExitEase, delay: C.introDuration, onComplete: () => intro.remove() })
       .addLabel("heroIn", "-=0.4")
       .fromTo(heroItems, { y: C.scrollAnimationDistance, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: C.textRevealDuration, ease: C.textRevealEase, stagger: C.introHeroStagger }, "heroIn")
       .fromTo(isMobile ? ".about" : {}, { yPercent: 100 }, { yPercent: 0, duration: C.mobileSlideUpDuration, ease: C.mobileSlideUpEase }, "heroIn+=0.15")

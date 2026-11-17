@@ -73,15 +73,15 @@ window.ANIMATION_CONFIG = {
   // Tiap grup: selector = elemen target | split = "letters" (per huruf) / "words" (per kata) / kosong (elemen utuh)
   //            scale = tambahan ukuran penuh (0.3 = +30%) | neighbor = tambahan ukuran tetangga terdekat
   //            radius = jarak (px) pengaruh | power = ketajaman jatuhnya efek (besar = tetangga cepat mengecil)
-  //            sizeAdjust = true: elemen lebar otomatis pop lebih kecil | origin = titik tumpu skala
+  //            sizeAdjust = true: elemen lebar otomatis pop lebih kecil | origin = titik tumpu skala (default: tengah elemen, supaya pop selalu center)
   popGroups: [
     { selector: ".work figure",                     scale: 0.16, neighbor: 0.085, radius: 260, power: 1.4, sizeAdjust: true },        // foto desain grafis & ilustrasi
     { selector: ".about__text, .work__desc",        split: "letters", scale: 0.85, neighbor: 0.42, radius: 48, power: 2.2 },         // isi about me + penjelasan 3 karya: per huruf
-    { selector: ".thanks p",                        split: "words",   scale: 0.3,  neighbor: 0.15, radius: 90, power: 1.6 },         // teks di bawah "thank you": per kata
+    { selector: ".thanks p",                        split: "letters", scale: 0.7,  neighbor: 0.35, radius: 55, power: 2.2 },         // teks di bawah "thank you": per huruf
     { selector: ".topbar",                          scale: 0.08, neighbor: 0.03, radius: 30, power: 1 },                             // bar kaca: pop selama kursor ada di areanya
     { selector: ".topbar > *",                      scale: 0.28, neighbor: 0.12, radius: 70, power: 1.6 },                          // syadad / 18 y.o / smkn 1 cibadak
-    { selector: ".about__intro p, .about__name, .h-sm, .skills p, .work__title, .duo-title--xl, .scan__title", scale: 0.14, neighbor: 0.06, radius: 120, power: 1.6, origin: "left center" }, // judul & education: utuh
-    { selector: ".soft li",                         scale: 0.2,  neighbor: 0.09, radius: 90, power: 1.6, origin: "left center" },    // tiap soft skill
+    { selector: ".about__intro p, .about__name, .h-sm, .skills p, .work__title, .duo-title--xl, .scan__title", scale: 0.14, neighbor: 0.06, radius: 120, power: 1.6 }, // judul & education: utuh
+    { selector: ".soft li",                         scale: 0.2,  neighbor: 0.09, radius: 90, power: 1.6 },    // tiap soft skill
     { selector: ".socials img, .hard img, .ring",   scale: 0.32, neighbor: 0.14, radius: 110, power: 1.6 },                         // logo sosmed, logo aplikasi, lingkaran persen + angkanya
   ],
   popStiffness: 260,               // kekencangan pegas pop; besar = cepat
@@ -92,7 +92,8 @@ window.ANIMATION_CONFIG = {
   mobileSlideUpEase: "power3.out",
 
   // ---- Animasi pembuka (intro) ----
-  introHoldTime: 0.5,              // lama nama tampil di layar pembuka
-  introFadeDuration: 0.8,          // durasi layar pembuka menghilang
+  introDuration: 2.3,              // lama layar welcome tampil (detik) sebelum naik ke atas; hitungan 0-100% & progress bar mengikuti ini
+  introExitDuration: 0.95,         // durasi layar welcome terangkat ke atas
+  introExitEase: "power3.inOut",
   introHeroStagger: 0.15,          // jeda antar-elemen hero setelah intro
 };
