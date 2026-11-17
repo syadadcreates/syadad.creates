@@ -10,7 +10,7 @@ Sections.about = ({ about: a }) => `
     <div data-reveal><h2 id="about-title" class="h-sm">${a.title}</h2><p class="about__text">${a.text}</p></div>
     <div class="skills">
       <div data-reveal><h3 class="h-sm">${a.hardSkillsTitle}</h3>
-        <ul class="hard">${a.hardSkills.map((s) => `<li><img src="${s.icon}" alt="${s.name}" width="44" height="44"><span class="ring" style="--v:${s.level}"><b>${s.level}%</b></span></li>`).join("")}</ul></div>
+        <ul class="hard">${a.hardSkills.map((s) => `<li><img src="${s.icon}" alt="${s.name}" width="44" height="44"><span class="ring" data-level="${s.level}" style="--v:0"><b>0%</b></span></li>`).join("")}</ul></div>
       <div data-reveal><h3 class="h-sm">${a.softSkillsTitle}</h3><ul class="soft">${a.softSkills.map((s) => `<li>${s}</li>`).join("")}</ul></div>
       <div data-reveal><h3 class="h-sm">${a.educationTitle}</h3><p>${a.education.join("<br>")}</p></div>
     </div>

@@ -34,6 +34,11 @@ window.ANIMATION_CONFIG = {
   animateOnce: true,               // true = animasi tidak diulang saat scroll naik-turun
   smoothScrollDuration: 0.9,       // (detik) lama scroll saat klik menu internal
 
+  // ---- Lingkaran skill (persen) ----
+  skillRingDuration: 1.6,          // durasi lingkaran terisi & angka menghitung dari 0 ke target
+  skillRingEase: "power2.out",     // karakter gerak pengisian
+  skillRingStagger: 0.15,          // jeda antar-lingkaran (Photoshop, Figma, dst.)
+
   // ---- Animasi pembuka (intro) ----
   introHoldTime: 0.5,              // lama nama tampil di layar pembuka
   introFadeDuration: 0.8,          // durasi layar pembuka menghilang

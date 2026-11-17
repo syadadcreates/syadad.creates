@@ -88,6 +88,23 @@
     }
   }
 
+  // ---------- Lingkaran skill: terisi + angka menghitung dari 0 ----------
+  const rings = () => [...document.querySelectorAll(".ring[data-level]")];
+  const isMobile = window.matchMedia("(max-width: 820px)").matches;
+  function setRingsFinal() { rings().forEach((r) => { r.style.setProperty("--v", r.dataset.level); r.querySelector("b").textContent = r.dataset.level + "%"; }); }
+  function playRings() {
+    rings().forEach((r, i) => {
+      const o = { v: 0 }, label = r.querySelector("b"), target = +r.dataset.level;
+      gsap.to(o, { v: target, duration: C.skillRingDuration, delay: i * C.skillRingStagger, ease: C.skillRingEase,
+        onUpdate() { r.style.setProperty("--v", o.v); label.textContent = Math.round(o.v) + "%"; } });
+    });
+  }
+  // Desktop: jalan saat area skill masuk layar. Mobile: langsung setelah layar "welcome" selesai.
+  function initSkillRings() {
+    if (isMobile) return;
+    ScrollTrigger.create({ trigger: ".hard", start: C.scrollTriggerStart, once: true, onEnter: playRings });
+  }
+
   // ---------- Animasi pembuka ----------
   function runIntro() {
     const intro = document.querySelector(".intro");
@@ -95,15 +112,16 @@
     const tl = gsap.timeline();
     tl.fromTo(".intro__name", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: C.textRevealDuration, ease: C.textRevealEase })
       .to(intro, { autoAlpha: 0, duration: C.introFadeDuration, delay: C.introHoldTime, onComplete: () => intro.remove() })
-      .fromTo(heroItems, { y: C.scrollAnimationDistance, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: C.textRevealDuration, ease: C.textRevealEase, stagger: C.introHeroStagger }, "-=0.4");
+      .fromTo(heroItems, { y: C.scrollAnimationDistance, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: C.textRevealDuration, ease: C.textRevealEase, stagger: C.introHeroStagger }, "-=0.4")
+      .add(() => { if (isMobile) playRings(); }, "-=0.2");
   }
 
   window.initAnimations = function () {
     initSmoothScroll();
     if (reduce || !window.gsap) { // reduced motion / GSAP gagal dimuat → tampilkan semua tanpa animasi
-      root.classList.add("no-anim"); document.querySelector(".intro")?.remove(); return;
+      root.classList.add("no-anim"); setRingsFinal(); document.querySelector(".intro")?.remove(); return;
     }
     gsap.registerPlugin(ScrollTrigger);
-    initButtons(); initScrollAnimations(); runIntro();
+    initButtons(); initScrollAnimations(); initSkillRings(); runIntro();
   };
 })();
