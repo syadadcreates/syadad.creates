@@ -1,0 +1,59 @@
+/* ============================================================
+   BASE STYLES — Warna, font, ukuran, reset, tombol, judul, intro.
+   Ubah warna & font utama di bagian :root.
+   ============================================================ */
+:root {
+  --green-dark: #2f4f1f;     /* teks gelap hijau */
+  --green-olive: #6f8f55;    /* judul section (Creative output, dsb.) */
+  --green-soft: #a9b88a;     /* permukaan kaca */
+  --white: #fff;
+  --blue-ring: #2f7bff;      /* lingkaran skill */
+  --ink: #fff;
+  --font-display: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --page-pad: clamp(20px, 6vw, 80px);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { font-family: var(--font-body); background: #fff; color: var(--green-dark); overflow-x: hidden; line-height: 1.45; }
+img { display: block; max-width: 100%; height: auto; }
+ul { list-style: none; padding: 0; }
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 3px solid var(--blue-ring); outline-offset: 3px; border-radius: 6px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---- Judul dua gaya: tebal-miring + tipis ---- */
+.duo-title { font-family: var(--font-display); color: #fff; line-height: .9; letter-spacing: -.04em; font-size: clamp(64px, 14vw, 200px); }
+.duo-title b { font-weight: 800; font-style: italic; }
+.duo-title span { font-weight: 300; }
+.duo-title--green { color: var(--green-olive); }
+.duo-title--xl { font-size: clamp(56px, 11vw, 160px); }
+.word { display: inline-block; }
+
+/* ---- Tombol kaca ---- */
+.btn { display: inline-flex; align-items: center; justify-content: center; cursor: pointer; will-change: transform; touch-action: manipulation; }
+/* Efek "liquid glass" ala Apple: blur + saturasi, tepi terang, kilau lembut di atas */
+.glass, .glass-btn { position: relative; overflow: hidden; isolation: isolate;
+  background: linear-gradient(180deg, rgba(255,255,255,.34) 0%, rgba(255,255,255,.12) 55%, rgba(255,255,255,.2) 100%);
+  -webkit-backdrop-filter: blur(18px) saturate(190%); backdrop-filter: blur(18px) saturate(190%);
+  border: 1px solid rgba(255,255,255,.38);
+  box-shadow: inset 0 1.5px 0 rgba(255,255,255,.75), inset 0 -1.5px 1px rgba(255,255,255,.18), inset 0 0 14px rgba(255,255,255,.14), 0 8px 24px rgba(20,40,10,.18), 0 1px 3px rgba(20,40,10,.2); }
+.glass::before, .glass-btn::before { content: ""; position: absolute; z-index: -1; inset: 0 0 50% 0; border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,.4), rgba(255,255,255,0)); pointer-events: none; }
+.glass-btn { padding: .45em 1.2em; border-radius: 999px; color: #fff; font: 800 14px var(--font-display); letter-spacing: -.02em; text-shadow: 0 1px 2px rgba(20,40,10,.35); }
+.btn--sm { font-size: 13px; }
+a[data-placeholder="true"] { cursor: not-allowed; }
+
+/* ---- Layar pembuka ---- */
+.intro { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; background: #eef2e4; }
+.intro__name { font: 800 italic clamp(40px, 9vw, 96px) var(--font-display); letter-spacing: -.04em; color: var(--green-olive); opacity: 0; }
+
+/* ---- Keadaan awal animasi (disembunyikan sampai GSAP jalan) ---- */
+.js [data-reveal], .js [data-image], .js [data-hero], .js [data-split], .js [data-stagger] { opacity: 0; }
+.no-anim [data-reveal], .no-anim [data-image], .no-anim [data-hero], .no-anim [data-split], .no-anim [data-stagger] { opacity: 1 !important; }
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+
+/* Mencegah dekorasi blur keluar dari lebar layar */
+main { position: relative; overflow-x: clip; }
