@@ -38,6 +38,12 @@ Buka `animations/animationConfig.js`. Setiap pengaturan berkomentar dan terhubun
 Atribut HTML: `data-reveal`, `data-split="words"`, `data-image`, `data-parallax`, `data-stagger`, `data-magnetic`.
 Pengguna dengan *reduced motion* otomatis melihat halaman tanpa animasi.
 
+## Interaksi (kursor, tarik, goyang)
+Diatur di `animations/animationConfig.js` (bagian "Interaksi") dan dijalankan oleh `animations/interactions.js`.
+Elemen yang interaktif adalah yang punya atribut `data-interactive` (bintang chrome dan huruf "Portfolio").
+Tambahkan atribut itu ke elemen lain untuk ikut interaktif. Wiggle bintang: `starWiggle*`. Huruf naik: `letterReveal*`, `letterStagger`.
+Sensor goyang perangkat hanya jalan lewat HTTPS atau localhost; di iPhone, izin muncul saat pengunjung pertama kali mengetuk layar.
+
 ## Menambah / menghapus section
 1. Buat file di `sections/` (salin pola `Sections.namaBaru = (c) => \`...\``).
 2. Tambahkan `<script src="sections/namaBaru.js">` di `index.html`.

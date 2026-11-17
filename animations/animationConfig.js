@@ -39,6 +39,29 @@ window.ANIMATION_CONFIG = {
   skillRingEase: "power2.out",     // karakter gerak pengisian
   skillRingStagger: 0.15,          // jeda antar-lingkaran (Photoshop, Figma, dst.)
 
+  // ---- Wiggle bintang chrome (hero) ----
+  starWiggleAngle: 12,             // sudut goyang (derajat) kiri-kanan
+  starWiggleScale: 1.06,           // ukuran maksimum saat berdenyut (1 = tidak berubah)
+  starWiggleDuration: 2.6,         // durasi satu siklus goyang (detik); bintang ke-2 sedikit berbeda
+
+  // ---- Judul "Portfolio" muncul per huruf dari bawah ----
+  letterRevealDuration: 0.95,      // durasi tiap huruf naik
+  letterStagger: 0.07,             // jeda antar-huruf
+  letterRevealEase: "power4.out",
+
+  // ---- Interaksi (kursor, tarik, sensor perangkat) -> animations/interactions.js ----
+  repelRadius: 150,                // jarak (px) kursor mulai mendorong elemen; 0 = mati
+  repelStrength: 2600,             // kekuatan dorongan; makin besar elemen menghindar makin jauh
+  springStiffness: 55,             // kekencangan pegas saat elemen kembali ke tempat asal
+  springDamping: 7,                // peredam; kecil = memantul lebih lama, besar = cepat diam
+  dragFollow: 0.9,                 // seberapa ikut elemen saat ditarik (1 = persis kursor)
+  maxDisplacement: 220,            // batas tarikan (px); makin jauh makin berat (elastis)
+  flingBoost: 0.8,                 // dorongan dari kecepatan tarikan saat dilepas
+  releaseSnap: 7,                  // sentakan balik saat dilepas ("mental"); 0 = tanpa sentakan
+  shakeThreshold: 2.2,             // ambang guncangan (m/s²); di bawah ini perangkat dianggap diam
+  shakeStrength: 70,               // seberapa kuat elemen bergoyang saat perangkat diguncang
+  shakeMaxImpulse: 900,            // batas dorongan per guncangan
+
   // ---- Animasi pembuka (intro) ----
   introHoldTime: 0.5,              // lama nama tampil di layar pembuka
   introFadeDuration: 0.8,          // durasi layar pembuka menghilang

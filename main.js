@@ -16,4 +16,5 @@
   });
   applyLinks();
   window.initAnimations();
+  window.initInteractions(); // kursor menghindar, tarik-lepas, goyang sensor perangkat
 })();

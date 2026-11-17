@@ -14,6 +14,10 @@ window.UI = {
   button(text, link, cls = "") {
     return `<a class="btn glass-btn ${cls}" data-link="${link}"><span>${text}</span></a>`;
   },
+  // Pecah teks menjadi huruf (untuk animasi per-huruf & interaksi kursor)
+  letters(text) {
+    return [...text].map((ch) => `<span class="char-wrap"><span class="char" data-interactive="char">${ch}</span></span>`).join("");
+  },
   img(src, alt, cls = "") {
     return `<img class="${cls}" src="${src}" alt="${alt}" loading="lazy" decoding="async">`;
   },

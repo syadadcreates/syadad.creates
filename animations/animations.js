@@ -105,6 +105,17 @@
     ScrollTrigger.create({ trigger: ".hard", start: C.scrollTriggerStart, once: true, onEnter: playRings });
   }
 
+  // ---------- Wiggle bintang chrome ----------
+  function initStarWiggle() {
+    document.querySelectorAll(".hero .star").forEach((star, i) => {
+      const a = C.starWiggleAngle * (i % 2 ? -1 : 1), d = C.starWiggleDuration * (1 + i * 0.22);
+      gsap.to(star, { keyframes: [
+        { rotation: a, scale: C.starWiggleScale }, { rotation: -a * 0.7, scale: 1 },
+        { rotation: a * 0.45, scale: C.starWiggleScale * 0.98 }, { rotation: 0, scale: 1 } ],
+        duration: d, ease: "sine.inOut", repeat: -1 });
+    });
+  }
+
   // ---------- Animasi pembuka ----------
   function runIntro() {
     const intro = document.querySelector(".intro");
@@ -113,15 +124,17 @@
     tl.fromTo(".intro__name", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: C.textRevealDuration, ease: C.textRevealEase })
       .to(intro, { autoAlpha: 0, duration: C.introFadeDuration, delay: C.introHoldTime, onComplete: () => intro.remove() })
       .fromTo(heroItems, { y: C.scrollAnimationDistance, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: C.textRevealDuration, ease: C.textRevealEase, stagger: C.introHeroStagger }, "-=0.4")
+      .fromTo(".hero .char", { yPercent: 120 }, { yPercent: 0, duration: C.letterRevealDuration, ease: C.letterRevealEase, stagger: C.letterStagger,
+        onComplete: () => document.querySelectorAll(".char-wrap").forEach((w) => w.classList.add("is-revealed")) }, "-=0.5")
       .add(() => { if (isMobile) playRings(); }, "-=0.2");
   }
 
   window.initAnimations = function () {
     initSmoothScroll();
     if (reduce || !window.gsap) { // reduced motion / GSAP gagal dimuat → tampilkan semua tanpa animasi
-      root.classList.add("no-anim"); setRingsFinal(); document.querySelector(".intro")?.remove(); return;
+      root.classList.add("no-anim"); setRingsFinal(); document.querySelectorAll(".char-wrap").forEach((w) => w.classList.add("is-revealed")); document.querySelector(".intro")?.remove(); return;
     }
     gsap.registerPlugin(ScrollTrigger);
-    initButtons(); initScrollAnimations(); initSkillRings(); runIntro();
+    initButtons(); initScrollAnimations(); initSkillRings(); initStarWiggle(); runIntro();
   };
 })();
