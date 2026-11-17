@@ -74,13 +74,16 @@
       gsap.fromTo(words, up, { ...upTo, stagger: C.wordStaggerDelay, scrollTrigger: trig(el) });
       gsap.set(el, { autoAlpha: 1 });
     });
-    document.querySelectorAll("[data-reveal]").forEach((el) => gsap.fromTo(el, up, { ...upTo, scrollTrigger: trig(el) }));
+    // Mobile: isi kartu profil tidak perlu reveal sendiri, karena kartunya sudah naik dari bawah.
+    const inSlideCard = (el) => isMobile && el.closest(".about");
+    document.querySelectorAll("[data-reveal]").forEach((el) => { if (inSlideCard(el)) gsap.set(el, { autoAlpha: 1 }); else gsap.fromTo(el, up, { ...upTo, scrollTrigger: trig(el) }); });
     document.querySelectorAll("[data-stagger]").forEach((g) => {
+      if (inSlideCard(g)) { gsap.set(g, { autoAlpha: 1 }); return; }
       const items = g.querySelectorAll("[data-stagger-item]");
       gsap.fromTo(items, up, { ...upTo, stagger: C.sectionStaggerDelay, scrollTrigger: trig(g) });
       gsap.set(g, { autoAlpha: 1 });
     });
-    document.querySelectorAll("[data-image]").forEach((el) =>
+    document.querySelectorAll("[data-image]").forEach((el) => inSlideCard(el) ? gsap.set(el, { autoAlpha: 1 }) :
       gsap.fromTo(el, { autoAlpha: 0, scale: C.imageStartScale }, { autoAlpha: 1, scale: 1, duration: C.imageFadeDuration, ease: C.imageEase, scrollTrigger: trig(el) }));
     if (C.parallaxDistance) {
       document.querySelectorAll("[data-parallax]").forEach((el) =>
@@ -123,7 +126,9 @@
     const tl = gsap.timeline();
     tl.fromTo(".intro__name", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: C.textRevealDuration, ease: C.textRevealEase })
       .to(intro, { autoAlpha: 0, duration: C.introFadeDuration, delay: C.introHoldTime, onComplete: () => intro.remove() })
-      .fromTo(heroItems, { y: C.scrollAnimationDistance, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: C.textRevealDuration, ease: C.textRevealEase, stagger: C.introHeroStagger }, "-=0.4")
+      .addLabel("heroIn", "-=0.4")
+      .fromTo(heroItems, { y: C.scrollAnimationDistance, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: C.textRevealDuration, ease: C.textRevealEase, stagger: C.introHeroStagger }, "heroIn")
+      .fromTo(isMobile ? ".about" : {}, { yPercent: 100 }, { yPercent: 0, duration: C.mobileSlideUpDuration, ease: C.mobileSlideUpEase }, "heroIn+=0.15")
       .fromTo(".hero .char", { yPercent: 120 }, { yPercent: 0, duration: C.letterRevealDuration, ease: C.letterRevealEase, stagger: C.letterStagger,
         onComplete: () => document.querySelectorAll(".char-wrap").forEach((w) => w.classList.add("is-revealed")) }, "-=0.5")
       .add(() => { if (isMobile) playRings(); }, "-=0.2");

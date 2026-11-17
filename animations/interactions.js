@@ -1,6 +1,6 @@
 // ============================================================
 // INTERACTIONS — Fisika sederhana untuk elemen ber-atribut data-interactive
-// (bintang chrome & huruf "Portfolio"). Semua angka dari animationConfig.js.
+// (hampir semua elemen; tombol & link dikecualikan agar tetap bisa diklik). Semua angka dari animationConfig.js.
 //  1) Kursor mendekat  -> elemen menghindar, lalu kembali saat kursor menjauh.
 //  2) Elemen ditarik    -> ikut tertarik (elastis); saat dilepas mental & kembali ke asal.
 //  3) Sensor perangkat  -> perangkat diam = elemen diam; diguncang = elemen ikut bergoyang.
@@ -13,7 +13,12 @@
 
   window.initInteractions = function () {
     if (reduce) return;
-    const items = [...document.querySelectorAll("[data-interactive]")].map((el) => ({ el, kind: el.dataset.interactive, x: 0, y: 0, vx: 0, vy: 0, k: 0.6 + Math.random() * 0.8 }));
+    // Beri atribut ke semua elemen di repelSelector, KECUALI tombol/link (agar tetap bisa diklik).
+    document.querySelectorAll(C.repelSelector).forEach((el) => { if (!el.dataset.interactive && !el.closest("a, button, .btn")) el.dataset.interactive = "auto"; });
+    const items = [...document.querySelectorAll("[data-interactive]")].map((el) => ({ el, kind: el.dataset.interactive, x: 0, y: 0, vx: 0, vy: 0, k: 0.6 + Math.random() * 0.8, visible: true }));
+    const massOf = (w, h, s) => (s.kind === "auto" ? Math.max(C.repelMinMass, Math.min(1, 160 / Math.max(w, h, 1))) : 1);
+    const io = new IntersectionObserver((es) => es.forEach((e) => { const s = items.find((i) => i.el === e.target); if (s) s.visible = e.isIntersecting; }), { rootMargin: "200px" });
+    items.forEach((s) => io.observe(s.el));
     if (!items.length) return;
     let cursor = null, drag = null, raf = 0, last = 0;
 
@@ -27,10 +32,15 @@
         if (drag && drag.s === s) continue;
         let ax = -C.springStiffness * s.x - C.springDamping * s.vx;
         let ay = -C.springStiffness * s.y - C.springDamping * s.vy;
-        if (cursor && C.repelRadius > 0) {
-          const r = s.el.getBoundingClientRect();
-          const dx = r.left + r.width / 2 - s.x - cursor.x, dy = r.top + r.height / 2 - s.y - cursor.y, d = Math.hypot(dx, dy);
-          if (d < C.repelRadius && d > 0.01) { const f = Math.pow(1 - d / C.repelRadius, 2) * C.repelStrength; ax += (dx / d) * f; ay += (dy / d) * f; }
+        if (cursor && C.repelRadius > 0 && s.visible) {
+          const r = s.el.getBoundingClientRect(), l0 = r.left - s.x, t0 = r.top - s.y; // posisi asli tanpa pergeseran
+          const nx = Math.max(l0, Math.min(cursor.x, l0 + r.width)), ny = Math.max(t0, Math.min(cursor.y, t0 + r.height));
+          const d = Math.hypot(nx - cursor.x, ny - cursor.y); // jarak kursor ke tepi terdekat elemen
+          if (d < C.repelRadius) {
+            const ex = l0 + r.width / 2 - cursor.x, ey = t0 + r.height / 2 - cursor.y, el = Math.hypot(ex, ey) || 1;
+            const f = Math.pow(1 - d / C.repelRadius, 2) * C.repelStrength * massOf(r.width, r.height, s);
+            ax += (ex / el) * f; ay += (ey / el) * f;
+          }
         }
         s.vx += ax * dt; s.vy += ay * dt;
         s.x = clamp(s.x + s.vx * dt, C.maxDisplacement * 1.4); s.y = clamp(s.y + s.vy * dt, C.maxDisplacement * 1.4);
@@ -49,7 +59,7 @@
     document.documentElement.addEventListener("mouseleave", () => { cursor = null; wake(); });
 
     // ---- 2) Tarik & lepas ----
-    items.forEach((s) => {
+    items.filter((s) => s.kind !== "auto").forEach((s) => { // hanya bintang & huruf judul yang bisa ditarik
       s.el.addEventListener("dragstart", (e) => e.preventDefault());
       s.el.addEventListener("pointerdown", (e) => {
         if (e.pointerType === "touch" && s.kind !== "star") return; // huruf: biarkan scroll di layar sentuh
@@ -82,8 +92,9 @@
           const dx = a.x - prev.x, dy = a.y - prev.y, dz = (a.z || 0) - prev.z, mag = Math.hypot(dx, dy, dz);
           if (mag > C.shakeThreshold) {
             items.forEach((s) => {
-              s.vx += clamp(-dx * C.shakeStrength * s.k, C.shakeMaxImpulse) + (Math.random() - 0.5) * mag * C.shakeStrength * 0.4;
-              s.vy += clamp(dy * C.shakeStrength * s.k, C.shakeMaxImpulse) + (Math.random() - 0.5) * mag * C.shakeStrength * 0.4;
+              const m = massOf(s.el.offsetWidth, s.el.offsetHeight, s);
+              s.vx += (clamp(-dx * C.shakeStrength * s.k, C.shakeMaxImpulse) + (Math.random() - 0.5) * mag * C.shakeStrength * 0.4) * m;
+              s.vy += (clamp(dy * C.shakeStrength * s.k, C.shakeMaxImpulse) + (Math.random() - 0.5) * mag * C.shakeStrength * 0.4) * m;
             });
             wake();
           }

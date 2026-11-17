@@ -62,6 +62,15 @@ window.ANIMATION_CONFIG = {
   shakeStrength: 70,               // seberapa kuat elemen bergoyang saat perangkat diguncang
   shakeMaxImpulse: 900,            // batas dorongan per guncangan
 
+  // ---- Elemen yang ikut menghindar kursor ----
+  repelSelector: ".topbar span, .hero__year, .about__intro p, .about__name, .about__photo, .socials img, .about__text, .h-sm, .hard img, .ring, .soft li, .skills p, .duo-title--xl, .work__title, .work__desc, .grid-posters figure, .grid-illus figure, .carousel, .banner, .scan__title, .thanks p",
+                                   // daftar elemen (CSS selector) yang ikut menghindar; tombol & link TIDAK boleh dimasukkan
+  repelMinMass: 0.12,              // elemen besar (foto, carousel) bergerak lebih sedikit; 0.12 = paling berat
+
+  // ---- Mobile: konten kedua naik dari bawah setelah welcome ----
+  mobileSlideUpDuration: 1.1,      // durasi kartu profil naik dari bawah (khusus mobile)
+  mobileSlideUpEase: "power3.out",
+
   // ---- Animasi pembuka (intro) ----
   introHoldTime: 0.5,              // lama nama tampil di layar pembuka
   introFadeDuration: 0.8,          // durasi layar pembuka menghilang

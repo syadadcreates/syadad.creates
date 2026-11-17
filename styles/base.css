@@ -62,6 +62,8 @@ main { position: relative; overflow-x: clip; }
 .char-wrap { display: inline-block; overflow: hidden; vertical-align: top; padding: .12em .16em; margin: -.12em -.16em; }
 .char-wrap.is-revealed, .no-anim .char-wrap { overflow: visible; }
 .char { display: inline-block; will-change: transform; }
-[data-interactive] { cursor: grab; user-select: none; -webkit-user-select: none; -webkit-user-drag: none; }
+[data-interactive="star"], [data-interactive="char"] { cursor: grab; user-select: none; -webkit-user-select: none; -webkit-user-drag: none; }
 [data-interactive="star"] { touch-action: none; }
 [data-interactive].is-dragging { cursor: grabbing; }
+/* tombol & link selalu di atas elemen lain yang bergeser, supaya tetap bisa diklik */
+.btn, a[data-link] { position: relative; z-index: 3; }

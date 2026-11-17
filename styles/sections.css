@@ -30,8 +30,9 @@
 .socials li { display: flex; align-items: center; gap: 10px; }
 .socials img { width: clamp(26px, 2.6vw, 34px); height: clamp(26px, 2.6vw, 34px); object-fit: contain;  border-radius: 22.7%; }
 .h-sm { font: 800 clamp(18px, 2.2vw, 30px) var(--font-display); letter-spacing: -.05em; margin-bottom: .45em; }
-.about__text { max-width: 74ch; font-size: clamp(12px, 1.35vw, 17px); line-height: 1.5; }
-.skills { margin-top: clamp(24px, 4vw, 56px); display: grid; grid-template-columns: auto auto 1fr; gap: clamp(20px, 5vw, 80px); align-items: start; font-size: clamp(13px, 1.6vw, 20px); }
+.about__main { padding-left: clamp(8px, 5vw, 90px); }
+.about__text { max-width: none; font-size: clamp(12px, 1.35vw, 17px); line-height: 1.5; }
+.skills { margin-top: clamp(24px, 4vw, 56px); display: grid; grid-template-columns: auto auto auto; justify-content: space-between; gap: clamp(20px, 5vw, 80px); align-items: start; font-size: clamp(13px, 1.6vw, 20px); }
 .hard { display: grid; gap: 12px; }
 .hard li { display: flex; align-items: center; gap: 14px; }
 .hard img { width: clamp(34px, 4vw, 54px); height: clamp(34px, 4vw, 54px); object-fit: contain; }
@@ -100,7 +101,9 @@
   .page:first-of-type { min-height: 100vh; min-height: 100svh; } .page:first-of-type > .hero { flex: 1 1 auto; }
   .page > section { min-height: 0 !important; flex: 0 0 auto; }
   .hero { padding-top: 120px; }
-  .page > .about { margin-top: 0; flex: 0 0 auto; padding: 36px 18px 28px; border-radius: 28px; }
+  .page:first-of-type { overflow: hidden; }
+  .page > .about { margin-top: -30px; flex: 0 0 auto; padding: 36px 18px 28px; border-radius: 28px; }
+  .about__main { padding-left: 6px; }
   .topbar { width: calc(100% - 28px); padding: .5em 1.1em; font-size: 10.5px; top: 12px; }
   .hero__year { font-size: 16px; margin-top: 18px; }
   .about__intro { font-size: 13px; margin-bottom: 12px; }
@@ -113,7 +116,7 @@
   .glass-btn { font-size: 8.5px; padding: .35em .8em; }
   .h-sm { font-size: 12.5px; margin-bottom: .3em; }
   .about__text { font-size: 9.5px; line-height: 1.4; }
-  .skills { grid-template-columns: auto auto 1fr; gap: 14px; margin-top: 14px; font-size: 9.5px; }
+  .skills { gap: 8px; margin-top: 14px; font-size: 9.5px; }
   .hard { gap: 7px; } .hard li { gap: 6px; }
   .hard img { width: 26px; height: 26px; }
   .ring { width: 26px; } .ring::before { inset: 3px; } .ring b { font-size: 7px; }
@@ -122,7 +125,9 @@
   .creative { padding-bottom: 8px; } .page > .work, .page > .thanks { padding-top: 24px; }
   .duo-title--xl { font-size: 12.5vw; white-space: nowrap; }
   .banner { flex: 2; }
-  .skills { gap: 10px !important; }
+  .skills { gap: 6px !important; }
+  .h-sm { white-space: nowrap; }
+  .soft li { white-space: nowrap; }
   .work { padding-inline: 18px; }
   .work__title { font-size: 25px; margin-bottom: 14px; }
   .work__desc { font-size: 10.5px; margin-top: 12px; max-width: 42ch; }
